@@ -6,5 +6,5 @@ export function guestCopy(occasion,{heading='Gathering details',gatheringIds=[],
  const gatherings=gatheringIds.map(id=>{const g=occasion.gatherings.find(g=>g.id===id);if(!g)throw Error('A selected gathering no longer exists. Review the selection.');return {name:g.title.trim()||'Gathering',date:g.date,time:g.time,venue:g.venue.trim()};});
  return {heading:heading.trim(),gatherings,practical:includePractical?occasion.practical.trim():''};
 }
-export function createGuestReview(occasion,options){return {occasionId:occasion.id,source:JSON.stringify(occasion),copy:guestCopy(occasion,options)};}
-export function guestReviewCurrent(occasion,review){return !!review&&occasion.id===review.occasionId&&JSON.stringify(occasion)===review.source;}
+export function createGuestReview(occasion,options,{now=new Date()}={}){return {occasionId:occasion.id,source:JSON.stringify(occasion),selection:structuredClone(options),preparedAt:now.toISOString(),copy:guestCopy(occasion,options)};}
+export function guestReviewCurrent(occasion,review){try{return !!review&&occasion.id===review.occasionId&&JSON.stringify(occasion)===review.source&&typeof review.preparedAt==='string'&&new Date(review.preparedAt).toISOString()===review.preparedAt&&JSON.stringify(review.copy)===JSON.stringify(guestCopy(occasion,review.selection));}catch{return false;}}

@@ -48,3 +48,7 @@ The existing Worker build is `node scripts/build-measurement.mjs`, followed by `
 ## Limits and rights
 
 These are planning aids, not a substitute for qualified legal, medical or funeral-service advice. Verify local requirements and provider details independently. Venue data has its own attribution in `public/celebrations/data/CITY-OF-SYDNEY-ATTRIBUTION.txt`; preserve it. Original platform code is MIT-licensed; see THIRD-PARTY-NOTICES.md for exclusions. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Offline guest handout
+
+The celebrations planner can prepare an HTML or plain-text guest handout from explicitly reviewed guest fields. It does not send invitations, update previously downloaded files, or include the whole private plan. Re-review after changing the plan. Verify this feature with `node --test test/guest-file.test.mjs`.
