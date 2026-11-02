@@ -1,0 +1,7 @@
+Venues for hire — City of Sydney
+Source: https://www.arcgis.com/home/item.html?id=295675f834174b08bb8d4ea2af5e0d42
+Licensed under Creative Commons Attribution 4.0: https://creativecommons.org/licenses/by/4.0/
+Snapshot retrieved 2026-10-31T23:59:24.452Z
+Dataset last-edit metadata 2026-06-10T05:04:20.024Z (not per-venue verification).
+Adaptation: names and address/locality fields extracted for local text search; coordinates omitted from adapted search data. Original GeoJSON supplied unchanged. No endorsement implied. No price, capacity, availability, suitability, contact or venue-specific URL information supplied by this dataset.
+Source GeoJSON SHA256 a3b5f29bceaea6f6395c5e6a4de5ee291af0aef067fdc030a67ca566a14a3ec1

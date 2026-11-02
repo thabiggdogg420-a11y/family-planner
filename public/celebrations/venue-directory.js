@@ -1,0 +1,35 @@
+// Search a bundled licensed directory, not live websites, availability or suitability.
+import {createRequest,reviewEvidence,importEvidence,enquiryOptionCurrent} from './research.js';
+export const DIRECTORY_SOURCE='https://www.arcgis.com/home/item.html?id=295675f834174b08bb8d4ea2af5e0d42';
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+function exact(o,keys){if(!o||Array.isArray(o)||typeof o!=='object'||Object.keys(o).length!==keys.length||keys.some(k=>!Object.hasOwn(o,k)))throw Error('Directory data has an unsupported shape.');}
+export function validateDirectory(d){
+ exact(d,['schemaVersion','publisher','sourceUrl','licenseUrl','retrievedAt','sourceLastEdit','rawSha256','records']);
+ if(d.schemaVersion!==1||d.publisher!=='City of Sydney'||d.sourceUrl!==DIRECTORY_SOURCE||d.licenseUrl!=='https://creativecommons.org/licenses/by/4.0/'||!/^[a-f0-9]{64}$/.test(d.rawSha256))throw Error('Directory provenance is invalid.');
+ for(const key of ['retrievedAt','sourceLastEdit'])if(typeof d[key]!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(d[key])||!Number.isFinite(Date.parse(d[key]))||new Date(d[key]).toISOString()!==d[key])throw Error('Directory timestamp is invalid.');
+ if(!Array.isArray(d.records)||!d.records.length||d.records.length>500)throw Error('Directory records are missing or too large.');const ids=new Set();
+ for(const r of d.records){exact(r,['id','name','address','suburb','postcode']);if(!/^[1-9]\d{0,8}$/.test(r.id)||ids.has(r.id))throw Error('Directory listing IDs are invalid.');ids.add(r.id);for(const k of ['name','address','suburb','postcode'])if(typeof r[k]!=='string'||r[k].length>300||!r[k].trim())throw Error('Directory listing text is missing or too long.');if(!/^\d{4}$/.test(r.postcode))throw Error('Directory postcode is invalid.');}return structuredClone(d);
+}
+export function searchDirectory(d,query=''){validateDirectory(d);if(typeof query!=='string'||query.length>120)throw Error('Use up to 120 characters to search this directory.');const terms=query.toLocaleLowerCase('en-AU').trim().split(/\s+/).filter(Boolean);return d.records.filter(r=>terms.every(t=>[r.name,r.suburb,r.postcode].join(' ').toLocaleLowerCase('en-AU').includes(t))).map(r=>({...r}));}
+function existing(o,recordId,gatheringId){return o.research.imports.filter(i=>i.request.gatheringId===gatheringId&&i.package.candidates.some(c=>c.id==='cos-'+recordId&&c.sources.some(s=>s.url===DIRECTORY_SOURCE)));}
+export function reviewDirectory(o,d,recordId,gatheringId){
+ validateDirectory(d);const r=d.records.find(x=>x.id===recordId),g=o.gatherings.find(x=>x.id===gatheringId);if(!r||!g)throw Error('Choose a current listing and gathering.');
+ const previous=o.research.request,prior=existing(o,recordId,gatheringId),candidateIndex=i=>i.package.candidates.findIndex(c=>c.id==='cos-'+recordId),duplicate=prior.find(i=>enquiryOptionCurrent(o,i.optionIds[candidateIndex(i)]));if(duplicate)return {occasionId:o.id,source:JSON.stringify(o),directorySource:JSON.stringify(d),recordId,gatheringId,duplicate:true,optionId:duplicate.optionIds[duplicate.package.candidates.findIndex(c=>c.id==='cos-'+recordId)]};
+ let serial=0;while(o.research.imports.some(i=>i.packageId==='cos-'+recordId+'-'+serial))serial++;
+ const brief=previous?.gatheringId===gatheringId?previous.brief:'Find listed venue possibilities in the City of Sydney council area. Capacity, suitability, complete event cost, availability and contact destination need separate checks.';
+ const unchanged=previous?.gatheringId===gatheringId&&previous.gatheringSource===JSON.stringify(g);
+ const request=unchanged?structuredClone(previous):createRequest(o,gatheringId,brief,{requestId:previous?.requestId||'directory-request-'+serial,revision:(previous?.revision||0)+1});
+ const next=structuredClone(o);next.research.request=request;
+ const p={schemaVersion:1,packageId:'cos-'+recordId+'-'+serial,occasionId:o.id,gatheringId,request:{requestId:request.requestId,revision:request.revision,brief:request.brief},checkedAt:d.retrievedAt,
+ runner:{kind:'manual',name:'Organiser-selected bundled official directory',receipt:'The organiser reviewed a listing from the bundled City of Sydney snapshot retrieved '+d.retrievedAt+'. This is a manual selection/import, not a claim the organiser visited the publisher or that this app fetched a live website. Publisher dataset last-edit metadata: '+d.sourceLastEdit+'; not individual venue verification. CC BY 4.0; '+d.licenseUrl},status:'partial',failures:['City of Sydney council directory only; not all Sydney or NSW venues.','Dataset provides no price, capacity, availability, suitability, contact or venue-specific website. Source URL is the dataset, not a recipient.','Listing may have changed since snapshot retrieval; confirm current facts separately.'],candidates:[{id:'cos-'+r.id,name:r.name,kind:'venue',destinationUrl:d.sourceUrl,sources:[{id:'city-directory',url:d.sourceUrl,title:'City of Sydney — Venues for hire, bundled snapshot',retrievedAt:d.retrievedAt}],claims:[{text:'Directory-listed venue: '+r.name+'. Listed address: '+r.address+', '+r.suburb+' '+r.postcode+'.',sourceIds:['city-directory']}],fit:[],price:{status:'unknown',note:'No price field in this directory.'},availability:{status:'unknown',note:'No availability field; not reserved or confirmed.'},terms:[]}]};
+ const evidence=reviewEvidence(next,p);return {occasionId:o.id,source:JSON.stringify(o),directorySource:JSON.stringify(d),recordId,gatheringId,duplicate:false,previousOptionIds:prior.map(i=>i.optionIds[candidateIndex(i)]),previousRequest:structuredClone(previous),request,evidence,requestChanged:!same(previous,request)};
+}
+export function applyDirectory(o,d,review,{requestAcknowledged=false,reselectionAcknowledged=false}={}){
+ if(!review||review.occasionId!==o.id||review.source!==JSON.stringify(o)||review.directorySource!==JSON.stringify(d))throw Error('The occasion or directory changed. Review this listing again.');
+ const fresh=reviewDirectory(o,d,review.recordId,review.gatheringId);if(!same(fresh,review))throw Error('Directory preview changed. Review again.');if(fresh.duplicate)throw Error('This venue is already imported for this gathering. Review the existing comparison; no duplicate was added.');
+ if(fresh.previousOptionIds.length&&reselectionAcknowledged!==true)throw Error('Explicitly approve re-selecting this old snapshot under the current scope; previous comparisons and quotes stay unchanged.');
+ if(fresh.previousRequest&&fresh.requestChanged&&requestAcknowledged!==true)throw Error('Explicitly approve the shown research request change.');
+ const next=structuredClone(o);next.research.request=fresh.request;return importEvidence(next,fresh.evidence);
+}
+
+export async function fetchDirectory(fetcher=fetch){const response=await fetcher(new URL('./data/city-of-sydney-venues.json',import.meta.url));if(!response.ok)throw Error('Bundled directory could not be loaded.');const text=await response.text();if(text.length>250000)throw Error('Bundled directory exceeds its safety limit.');return validateDirectory(JSON.parse(text));}

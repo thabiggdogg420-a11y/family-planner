@@ -1,0 +1,66 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "a914c60d-0ee8-4d07-9959-3f46b0af89da",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "usage_daily": {
+      "name": "usage_daily",
+      "columns": {
+        "day": {
+          "name": "day",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "event": {
+          "name": "event",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "count": {
+          "name": "count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "usage_daily_day_event_pk": {
+          "columns": [
+            "day",
+            "event"
+          ],
+          "name": "usage_daily_day_event_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "usage_event": {
+          "name": "usage_event",
+          "value": "\"usage_daily\".\"event\" in ('landing','start','complete')"
+        },
+        "usage_count": {
+          "name": "usage_count",
+          "value": "\"usage_daily\".\"count\" between 0 and 10000"
+        }
+      }
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}

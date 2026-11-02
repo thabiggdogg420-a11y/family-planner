@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "publisher": "City of Sydney",
+  "sourceUrl": "https://www.arcgis.com/home/item.html?id=295675f834174b08bb8d4ea2af5e0d42",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "retrievedAt": "2026-10-31T23:59:24.452Z",
+  "sourceLastEdit": "2026-06-10T05:04:20.024Z",
+  "rawSha256": "a3b5f29bceaea6f6395c5e6a4de5ee291af0aef067fdc030a67ca566a14a3ec1",
+  "records": [
+    {
+      "id": "19",
+      "name": "Juanita Nielsen Community Centre",
+      "address": "31 Nicholson Street, Corner of Nicholson and Dowling Streets",
+      "suburb": "Woolloomooloo",
+      "postcode": "2011"
+    },
+    {
+      "id": "20",
+      "name": "King George V Recreation Centre",
+      "address": "15 Cumberland Street",
+      "suburb": "The Rocks",
+      "postcode": "2000"
+    },
+    {
+      "id": "22",
+      "name": "Pyrmont Community Centre",
+      "address": "79a John Street, Corner of John and Mount Streets",
+      "suburb": "Pyrmont",
+      "postcode": "2009"
+    },
+    {
+      "id": "23",
+      "name": "Redfern Community Centre",
+      "address": "29-53 Hugo Street",
+      "suburb": "Redfern",
+      "postcode": "2016"
+    },
+    {
+      "id": "27",
+      "name": "Joseph Sargeant Centre",
+      "address": "60 Prospect Street",
+      "suburb": "Erskineville",
+      "postcode": "2043"
+    },
+    {
+      "id": "28",
+      "name": "Joyton Park Kiosk",
+      "address": "21 Gadigal Avenue",
+      "suburb": "Zetland",
+      "postcode": "2017"
+    },
+    {
+      "id": "29",
+      "name": "Tote Building",
+      "address": "100 Joynton Avenue",
+      "suburb": "Zetland",
+      "postcode": "2017"
+    },
+    {
+      "id": "31",
+      "name": "Benledi House",
+      "address": "186 Glebe Point Road",
+      "suburb": "Glebe",
+      "postcode": "2037"
+    },
+    {
+      "id": "32",
+      "name": "Mary McDonald Centre",
+      "address": "82 Bourke Street",
+      "suburb": "Woolloomooloo",
+      "postcode": "2010"
+    },
+    {
+      "id": "33",
+      "name": "Redfern Town Hall",
+      "address": "73 Pitt Street",
+      "suburb": "Redfern",
+      "postcode": "2016"
+    },
+    {
+      "id": "34",
+      "name": "Peter Forsyth Auditorium",
+      "address": "Francis Street, Corner Franklyn Street",
+      "suburb": "Glebe",
+      "postcode": "2037"
+    },
+    {
+      "id": "35",
+      "name": "Abraham Mott Hall",
+      "address": "15A Argyle Street",
+      "suburb": "Millers Point",
+      "postcode": "2000"
+    },
+    {
+      "id": "36",
+      "name": "Glebe Town Hall",
+      "address": "160 St Johns Road",
+      "suburb": "Glebe",
+      "postcode": "2037"
+    },
+    {
+      "id": "37",
+      "name": "Alexandria Town Hall",
+      "address": "73 Garden Street",
+      "suburb": "Alexandria",
+      "postcode": "2015"
+    },
+    {
+      "id": "38",
+      "name": "Booler Community Centre",
+      "address": "25-27 Lambert Street",
+      "suburb": "Camperdown",
+      "postcode": "2050"
+    },
+    {
+      "id": "39",
+      "name": "Brown Street Community Hall",
+      "address": "8-10 Brown Street",
+      "suburb": "Newtown",
+      "postcode": "2042"
+    },
+    {
+      "id": "40",
+      "name": "Cliff Noble Community Centre",
+      "address": "24 Suttor Street, Corner Renwick Street",
+      "suburb": "Alexandria",
+      "postcode": "2015"
+    },
+    {
+      "id": "41",
+      "name": "Erskineville Town Hall",
+      "address": "104 Erskineville Road",
+      "suburb": "Erskineville",
+      "postcode": "2043"
+    },
+    {
+      "id": "42",
+      "name": "Franklyn Park Community Space",
+      "address": "50 Glebe Street",
+      "suburb": "Glebe",
+      "postcode": "2037"
+    },
+    {
+      "id": "43",
+      "name": "Harry Jensen Community Centre",
+      "address": "17 Argyle Street",
+      "suburb": "Millers Point",
+      "postcode": "2000"
+    },
+    {
+      "id": "44",
+      "name": "Redfern Oval Community Room",
+      "address": "51 Redfern Street",
+      "suburb": "Redfern",
+      "postcode": "2016"
+    },
+    {
+      "id": "45",
+      "name": "Reginald Murphy Community Centre",
+      "address": "19 Greenknowe Avenue",
+      "suburb": "Potts Point",
+      "postcode": "2011"
+    },
+    {
+      "id": "46",
+      "name": "Ron Williams Community Centre",
+      "address": "5-11 Kepos Street",
+      "suburb": "Redfern",
+      "postcode": "2016"
+    },
+    {
+      "id": "47",
+      "name": "St Helen's Community Centre",
+      "address": "184 Glebe Point Road",
+      "suburb": "Glebe",
+      "postcode": "2037"
+    },
+    {
+      "id": "48",
+      "name": "Surry Hills Neighbourhood Service Centre",
+      "address": "405 Crown Street, Level 1",
+      "suburb": "Surry Hills",
+      "postcode": "2010"
+    },
+    {
+      "id": "49",
+      "name": "Sydney Park Pavilion",
+      "address": "Euston Road",
+      "suburb": "St Peters",
+      "postcode": "2044"
+    },
+    {
+      "id": "50",
+      "name": "Ultimo Community Centre",
+      "address": "40 William Henry Street",
+      "suburb": "Ultimo",
+      "postcode": "2007"
+    },
+    {
+      "id": "84",
+      "name": "Darlinghurst Community Space",
+      "address": "277 Bourke Street, Lower ground floor",
+      "suburb": "Darlinghurst",
+      "postcode": "2010"
+    },
+    {
+      "id": "85",
+      "name": "Green Square Community Hall",
+      "address": "3 Joynton Avenue",
+      "suburb": "Zetland",
+      "postcode": "2017"
+    },
+    {
+      "id": "86",
+      "name": "Harold Park Community Hall",
+      "address": "1 Dalgal Way",
+      "suburb": "Forest Lodge",
+      "postcode": "2037"
+    },
+    {
+      "id": "88",
+      "name": "Rex Centre",
+      "address": "58A Macleay Street, Entrance near Baroda Street",
+      "suburb": "Potts Point",
+      "postcode": "2011"
+    },
+    {
+      "id": "90",
+      "name": "Sydney Park Cycling Centre",
+      "address": "Sydney Park Road",
+      "suburb": "St Peters",
+      "postcode": "2044"
+    },
+    {
+      "id": "91",
+      "name": "East Sydney Community and Arts Centre",
+      "address": "34-40 Burton Street",
+      "suburb": "Darlinghurst",
+      "postcode": "2010"
+    },
+    {
+      "id": "100",
+      "name": "Customs House Library",
+      "address": "31 Alfred Street",
+      "suburb": "Sydney",
+      "postcode": "2000"
+    },
+    {
+      "id": "106",
+      "name": "Perry Park Recreation Centre",
+      "address": "1B Maddox Street",
+      "suburb": "Alexandria",
+      "postcode": "2015"
+    },
+    {
+      "id": "108",
+      "name": "180 George Street Community Space",
+      "address": "178A George Street",
+      "suburb": "Sydney",
+      "postcode": "2000"
+    },
+    {
+      "id": "112",
+      "name": "119 Redfern Street",
+      "address": "119 Redfern Street",
+      "suburb": "Redfern",
+      "postcode": "2016"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+// Private organiser records only: never authenticated helper acceptance or a send receipt.
+import {helperCopy,helperReviewCurrent} from './helper.js';
+const statuses=['awaiting','reported-accepted','reported-declined'];
+export const responseLabels={awaiting:'Awaiting a response (organiser record)','reported-accepted':'Reported accepted (organiser record only)','reported-declined':'Reported declined (organiser record only)'};
+function invalid(message){const e=Error(message);e.code='invalid';throw e;}
+function exact(v,keys){if(!v||typeof v!=='object'||Array.isArray(v)||Object.keys(v).length!==keys.length||keys.some(k=>!Object.hasOwn(v,k)))invalid('Helper response record has missing or unknown fields.');}
+function text(v,max=300){if(typeof v!=='string'||v.length>max)invalid('Helper response text is invalid.');}
+function date(v){text(v,10);if(v==='')return;const d=new Date(v+'T00:00:00Z');if(!/^\d{4}-\d{2}-\d{2}$/.test(v)||!Number.isFinite(d.getTime())||d.toISOString().slice(0,10)!==v)invalid('Helper snapshot date is invalid.');}
+function time(v){text(v,5);if(v!==''&&!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(v))invalid('Helper snapshot time is invalid.');}
+function array(v,max){if(!Array.isArray(v)||v.length>max)invalid('Helper response selection is invalid.');}
+function identifier(v){if(typeof v!=='string'||!/^[-a-zA-Z0-9_]{1,80}$/.test(v))invalid('Helper response identifier is invalid.');}
+function selectionCheck(s){exact(s,['heading','taskIds','runItems','gatheringIds','includePractical']);text(s.heading,120);if(!s.heading.trim()||typeof s.includePractical!=='boolean')invalid('Helper response selection is invalid.');for(const key of ['taskIds','gatheringIds']){array(s[key],key==='taskIds'?50:12);s[key].forEach(identifier);if(new Set(s[key]).size!==s[key].length)invalid('Duplicate helper response selection.');}array(s.runItems,600);for(const r of s.runItems){exact(r,['gatheringId','index']);identifier(r.gatheringId);if(!Number.isInteger(r.index)||r.index<0||r.index>49)invalid('Helper cue index is invalid.');}if(new Set(s.runItems.map(r=>`${r.gatheringId}:${r.index}`)).size!==s.runItems.length||!s.taskIds.length&&!s.runItems.length&&!s.gatheringIds.length)invalid('Choose distinct helper items explicitly.');return structuredClone(s);}
+export function responseSelection(s){if(!s||typeof s!=='object'||Object.keys(s).some(k=>!['heading','taskIds','runItems','gatheringIds','includePractical'].includes(k)))invalid('Unknown helper selection fields.');return selectionCheck({heading:s.heading??'Helper handover',taskIds:s.taskIds??[],runItems:s.runItems??[],gatheringIds:s.gatheringIds??[],includePractical:s.includePractical??false});}
+export function helperResponseSnapshot(o,selection){
+ const s=responseSelection(selection),copy=helperCopy(o,s),ids=new Set([...s.gatheringIds,...s.runItems.map(r=>r.gatheringId)]);
+ for(const id of s.taskIds){const task=o.tasks.find(t=>t.id===id);if(!task)invalid('Selected task is no longer present.');if(task.gatheringId)ids.add(task.gatheringId);else for(const g of o.gatherings)ids.add(g.id);}
+ const context=o.gatherings.filter(g=>ids.has(g.id)).map(({id,title,date,time,venue})=>({id,title,date,time,venue}));
+ return {copy,context,taskScopes:s.taskIds.map(id=>({id,gatheringId:o.tasks.find(t=>t.id===id).gatheringId}))};
+}
+export function helperResponseCurrent(o,r){try{return !r.invalidated&&JSON.stringify(helperResponseSnapshot(o,r.selection))===JSON.stringify(r.snapshot);}catch{return false;}}
+export function invalidateHelperResponses(o){for(const r of o.helperResponses??[])if(!helperResponseCurrent(o,r))r.invalidated=true;}
+export function reviewHelperResponse(o,handover,status){if(!statuses.includes(status))invalid('Choose a supported organiser-recorded response.');if(!helperReviewCurrent(o,handover))invalid('Review a current selected helper handover first.');if((o.helperResponses??[]).length>=100)invalid('This occasion already has 100 response records. Nothing changed.');const selection=responseSelection(handover.selection);return {occasionId:o.id,source:JSON.stringify(o),status,selection,snapshot:helperResponseSnapshot(o,selection)};}
+export function helperResponseReviewCurrent(o,handover,review){try{return helperReviewCurrent(o,handover)&&review?.source===JSON.stringify(o)&&review.occasionId===o.id&&JSON.stringify(responseSelection(handover.selection))===JSON.stringify(review.selection)&&JSON.stringify(helperResponseSnapshot(o,review.selection))===JSON.stringify(review.snapshot);}catch{return false;}}
+export function applyHelperResponse(o,review){
+ exact(review,['occasionId','source','status','selection','snapshot']);if(review.occasionId!==o.id||review.source!==JSON.stringify(o))invalid('The plan changed. Review the helper response again.');if(!statuses.includes(review.status))invalid('Unsupported response status.');const selection=responseSelection(review.selection),snapshot=helperResponseSnapshot(o,selection);if(JSON.stringify(snapshot)!==JSON.stringify(review.snapshot))invalid('The reviewed helper details changed.');
+ const next=structuredClone(o);next.helperResponses??=[];invalidateHelperResponses(next);
+ const latest=next.helperResponses.filter(r=>JSON.stringify(r.selection)===JSON.stringify(selection)).at(-1);
+ if(latest&&helperResponseCurrent(next,latest)&&latest.status===review.status)return next;
+ if(next.helperResponses.length>=100)invalid('This occasion already has 100 response records.');let serial=1;while(next.helperResponses.some(r=>r.id===`helper-response-${serial}`))serial++;
+ next.helperResponses.push({id:`helper-response-${serial}`,status:review.status,selection,snapshot,invalidated:false});return next;
+}
+function validateSnapshot(snapshot,s){
+ exact(snapshot,['copy','context','taskScopes']);array(snapshot.taskScopes,50);if(snapshot.taskScopes.length!==s.taskIds.length)invalid('Helper task scopes differ.');for(let i=0;i<snapshot.taskScopes.length;i++){const t=snapshot.taskScopes[i];exact(t,['id','gatheringId']);identifier(t.id);if(t.id!==s.taskIds[i])invalid('Helper task scope identity differs.');if(t.gatheringId!=='')identifier(t.gatheringId);}const c=snapshot.copy;exact(c,['heading','tasks','sequence',...(s.gatheringIds.length?['gatherings']:[]),...(s.includePractical?['practical']:[])]);text(c.heading,120);if(c.heading!==s.heading.trim())invalid('Helper snapshot heading differs.');
+ array(c.tasks,50);if(c.tasks.length!==s.taskIds.length)invalid('Helper snapshot tasks differ.');for(const t of c.tasks){exact(t,['text','done','owner','due','scope']);for(const k of ['text','owner','scope'])text(t[k]);date(t.due);if(typeof t.done!=='boolean')invalid('Helper task state is invalid.');}
+ array(c.sequence,600);if(c.sequence.length!==s.runItems.length)invalid('Helper snapshot cues differ.');for(const r of c.sequence){exact(r,['gathering','date','time','activity','owner']);for(const k of ['gathering','activity','owner'])text(r[k]);date(r.date);time(r.time);}
+ if(s.gatheringIds.length){array(c.gatherings,12);if(c.gatherings.length!==s.gatheringIds.length)invalid('Helper snapshot gatherings differ.');for(const g of c.gatherings){exact(g,['name','date','time','venue']);text(g.name);date(g.date);time(g.time);text(g.venue);}}
+ if(s.includePractical)text(c.practical,2000);
+ array(snapshot.context,12);const ids=new Set();for(const g of snapshot.context){exact(g,['id','title','date','time','venue']);identifier(g.id);if(ids.has(g.id))invalid('Duplicate context gathering.');ids.add(g.id);text(g.title);date(g.date);time(g.time);text(g.venue);}
+}
+export function validateHelperResponses(records,o){array(records,100);const ids=new Set();for(const r of records){exact(r,['id','status','selection','snapshot','invalidated']);identifier(r.id);if(ids.has(r.id))invalid('Duplicate helper response identifier.');ids.add(r.id);if(!statuses.includes(r.status)||typeof r.invalidated!=='boolean')invalid('Helper response state is invalid.');const s=selectionCheck(r.selection);validateSnapshot(r.snapshot,s);}const result=structuredClone(records);for(const r of result)if(!helperResponseCurrent(o,r))r.invalidated=true;return result;}
+export function latestHelperResponses(o){const latest=new Map();for(const r of o.helperResponses??[])latest.set(JSON.stringify(r.selection),r);return [...latest.values()];}

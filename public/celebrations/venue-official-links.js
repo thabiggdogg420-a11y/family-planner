@@ -1,0 +1,11 @@
+// Curated navigation only. These links are not CC BY dataset attributes or website-content copies.
+// No fetch, visitor query, private context, contact verification or form automation.
+const SOURCE='https://www.arcgis.com/home/item.html?id=295675f834174b08bb8d4ea2af5e0d42';
+const LINKS=Object.freeze({
+ '19':Object.freeze({name:'Juanita Nielsen Community Centre',url:'https://www.cityofsydney.nsw.gov.au/hireable-indoor-spaces/community-hall-juanita-nielsen-community-centre'}),
+ '33':Object.freeze({name:'Redfern Town Hall',url:'https://www.cityofsydney.nsw.gov.au/hireable-indoor-spaces/large-hall-redfern-town-hall'}),
+ '36':Object.freeze({name:'Glebe Town Hall',url:'https://www.cityofsydney.nsw.gov.au/hireable-indoor-spaces/main-hall-glebe-town-hall'})
+});
+export function officialHireLink(record){const r=record&&Object.hasOwn(LINKS,record.id)&&LINKS[record.id];return r&&r.name===record.name?{...r,curatedOn:'2026-11-01'}:null;}
+export function candidateOfficialHireLink(candidate){if(!candidate||candidate.destinationUrl!==SOURCE||!candidate.sources?.some(s=>s.url===SOURCE)||!/^cos-[1-9]\d*$/.test(candidate.id))return null;return officialHireLink({id:candidate.id.slice(4),name:candidate.name});}
+export function renderOfficialHireLink(link,esc){return link?`<details class="actions"><summary>Review official hire-page link</summary><p>Curated official page link matched to this directory listing on ${esc(link.curatedOn)}. This is a particular hire space, not a guarantee for every room or event. Website content, prices and contact details are not copied here. No working enquiry form, recipient, suitability or availability is verified.</p><p class="preserve">${esc(link.url)}</p><p>Opening leaves this app for the council website. Only this fixed URL is opened; your search, plan, notes and draft are not attached. Nothing is submitted or prefilled. Check the current page yourself before deciding whether to contact anyone.</p><a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Open official hire page (new tab)</a></details>`:'<p>No venue-specific official hire page mapped here. The general source dataset is evidence of the listing only, not a verified recipient. Use separate research before contacting anyone.</p>';}
