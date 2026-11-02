@@ -1,7 +1,7 @@
 {
   "id": "/memorial",
-  "name": "Family Frames · Memorial & Planning",
-  "short_name": "Family Frames",
+  "name": "Plan4Free · Memorial & Planning",
+  "short_name": "Plan4Free",
   "description": "Free local memorial and planning workspace. The photo-room host is a separate laptop service.",
   "start_url": "/memorial",
   "scope": "/memorial",

@@ -1,4 +1,6 @@
-# Family Planner / Farewell Together
+# Plan4Free
+
+[Open Plan4Free](https://family-frames-planning-preview.thabiggdogg420.chatgpt.site) · [Free4AllHub — all projects](https://free4allhub.thabiggdogg420.chatgpt.site) · Repository name remains `family-planner` for existing links.
 
 Practical browser-based tools for organizing celebrations and planning a farewell: break decisions into manageable steps, prepare handovers, and keep people informed without turning private family details into public content.
 
