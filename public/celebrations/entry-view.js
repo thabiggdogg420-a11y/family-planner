@@ -1,0 +1,1 @@
+'use strict';addEventListener('load',()=>{const view=new URLSearchParams(location.search).get('view');if(['money','helpers'].includes(view)){const button=document.getElementById(view);button?.click();button?.focus();}});
