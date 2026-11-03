@@ -1,0 +1,183 @@
+{
+  "format": "family-occasions-private-draft",
+  "version": 12,
+  "revision": "portable-backup",
+  "data": {
+    "occasions": [
+      {
+        "id": "qa-collision",
+        "type": "birthday",
+        "title": "CURRENT birthday — replace only on purpose",
+        "subjects": "Fictional current person",
+        "intention": "",
+        "roles": "",
+        "practical": "",
+        "budgetLimit": "",
+        "costs": [
+          {
+            "label": "Old fictional cost",
+            "amount": "15"
+          }
+        ],
+        "options": [],
+        "optionLinks": [],
+        "journey": {
+          "scale": "unknown",
+          "setting": "undecided",
+          "ceremony": "undecided",
+          "stage": "planning",
+          "completedCues": [],
+          "wrapDone": []
+        },
+        "research": {
+          "request": null,
+          "imports": []
+        },
+        "responses": [],
+        "helperResponses": [],
+        "moneyFollowups": [],
+        "tasks": [
+          {
+            "id": "task-0",
+            "text": "Choose the style of celebration",
+            "done": true,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-1",
+            "text": "Agree a comfortable budget",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-2",
+            "text": "Check venue access and food options",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-3",
+            "text": "Decide whether cake, gifts or surprises are wanted",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          }
+        ],
+        "gatherings": [
+          {
+            "id": "gathering-1",
+            "title": "Birthday gathering",
+            "date": "",
+            "time": "",
+            "venue": "",
+            "quantities": {
+              "headcount": "",
+              "seats": "",
+              "meals": "",
+              "revision": 0
+            },
+            "sequence": [
+              {
+                "time": "",
+                "activity": "Welcome and settle in",
+                "owner": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "qa-keep",
+        "type": "anniversary",
+        "title": "KEEP this unrelated anniversary",
+        "subjects": "",
+        "intention": "",
+        "roles": "Fictional private helper unchanged",
+        "practical": "",
+        "budgetLimit": "",
+        "costs": [],
+        "options": [],
+        "optionLinks": [],
+        "journey": {
+          "scale": "unknown",
+          "setting": "undecided",
+          "ceremony": "undecided",
+          "stage": "planning",
+          "completedCues": [],
+          "wrapDone": []
+        },
+        "research": {
+          "request": null,
+          "imports": []
+        },
+        "responses": [],
+        "helperResponses": [],
+        "moneyFollowups": [],
+        "tasks": [
+          {
+            "id": "task-0",
+            "text": "Agree what this milestone means to you",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-1",
+            "text": "Choose a shared budget",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-2",
+            "text": "Decide whether to include a toast or favourite memory",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-3",
+            "text": "Check venue access and food options",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          }
+        ],
+        "gatherings": [
+          {
+            "id": "gathering-1",
+            "title": "Anniversary gathering",
+            "date": "",
+            "time": "",
+            "venue": "",
+            "quantities": {
+              "headcount": "",
+              "seats": "",
+              "meals": "",
+              "revision": 0
+            },
+            "sequence": [
+              {
+                "time": "",
+                "activity": "Welcome and settle in",
+                "owner": ""
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "active": "qa-keep"
+  }
+}

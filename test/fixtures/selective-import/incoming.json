@@ -1,0 +1,267 @@
+{
+  "format": "family-occasions-private-draft",
+  "version": 12,
+  "revision": "portable-backup",
+  "data": {
+    "occasions": [
+      {
+        "id": "qa-collision",
+        "type": "commitment",
+        "title": "IMPORTED wedding — same ID does not prove same event",
+        "subjects": "Fictional imported couple",
+        "intention": "",
+        "roles": "",
+        "practical": "",
+        "budgetLimit": "",
+        "costs": [
+          {
+            "label": "Incoming fictional cost",
+            "amount": "90"
+          }
+        ],
+        "options": [],
+        "optionLinks": [],
+        "journey": {
+          "scale": "unknown",
+          "setting": "undecided",
+          "ceremony": "undecided",
+          "stage": "planning",
+          "completedCues": [],
+          "wrapDone": []
+        },
+        "research": {
+          "request": null,
+          "imports": []
+        },
+        "responses": [],
+        "helperResponses": [],
+        "moneyFollowups": [],
+        "tasks": [
+          {
+            "id": "task-0",
+            "text": "Agree what the people celebrating want, including whether to have a ceremony",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-1",
+            "text": "Set a comfortable celebration budget; keep unknown costs explicit",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-2",
+            "text": "Agree guest scope and check access, travel and food arrangements privately",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-3",
+            "text": "Decide which words, music, photos or traditions are wanted; none are assumed",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          }
+        ],
+        "gatherings": [
+          {
+            "id": "gathering-1",
+            "title": "Wedding / commitment celebration",
+            "date": "",
+            "time": "",
+            "venue": "",
+            "quantities": {
+              "headcount": "",
+              "seats": "",
+              "meals": "",
+              "revision": 0
+            },
+            "sequence": [
+              {
+                "time": "",
+                "activity": "Welcome and settle in",
+                "owner": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "qa-new",
+        "type": "other",
+        "title": "ADD fictional reunion",
+        "subjects": "",
+        "intention": "A fictional family gathering",
+        "roles": "",
+        "practical": "",
+        "budgetLimit": "",
+        "costs": [],
+        "options": [],
+        "optionLinks": [],
+        "journey": {
+          "scale": "unknown",
+          "setting": "undecided",
+          "ceremony": "undecided",
+          "stage": "planning",
+          "completedCues": [],
+          "wrapDone": []
+        },
+        "research": {
+          "request": null,
+          "imports": []
+        },
+        "responses": [],
+        "helperResponses": [],
+        "moneyFollowups": [],
+        "tasks": [
+          {
+            "id": "task-0",
+            "text": "Agree the purpose and what should be left out",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-1",
+            "text": "Set a comfortable budget; keep unknown costs explicit",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-2",
+            "text": "Check access, travel and food arrangements privately",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-3",
+            "text": "Agree who will help without assuming acceptance",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          }
+        ],
+        "gatherings": [
+          {
+            "id": "gathering-1",
+            "title": "Your gathering",
+            "date": "",
+            "time": "",
+            "venue": "Fictional hall <script>not executable</script>",
+            "quantities": {
+              "headcount": "",
+              "seats": "",
+              "meals": "",
+              "revision": 0
+            },
+            "sequence": [
+              {
+                "time": "",
+                "activity": "Welcome and settle in",
+                "owner": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "qa-omit",
+        "type": "birthday",
+        "title": "DO NOT IMPORT this occasion",
+        "subjects": "",
+        "intention": "",
+        "roles": "",
+        "practical": "",
+        "budgetLimit": "",
+        "costs": [],
+        "options": [],
+        "optionLinks": [],
+        "journey": {
+          "scale": "unknown",
+          "setting": "undecided",
+          "ceremony": "undecided",
+          "stage": "planning",
+          "completedCues": [],
+          "wrapDone": []
+        },
+        "research": {
+          "request": null,
+          "imports": []
+        },
+        "responses": [],
+        "helperResponses": [],
+        "moneyFollowups": [],
+        "tasks": [
+          {
+            "id": "task-0",
+            "text": "Choose the style of celebration",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-1",
+            "text": "Agree a comfortable budget",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-2",
+            "text": "Check venue access and food options",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          },
+          {
+            "id": "task-3",
+            "text": "Decide whether cake, gifts or surprises are wanted",
+            "done": false,
+            "owner": "",
+            "due": "",
+            "gatheringId": ""
+          }
+        ],
+        "gatherings": [
+          {
+            "id": "gathering-1",
+            "title": "Birthday gathering",
+            "date": "",
+            "time": "",
+            "venue": "",
+            "quantities": {
+              "headcount": "",
+              "seats": "",
+              "meals": "",
+              "revision": 0
+            },
+            "sequence": [
+              {
+                "time": "",
+                "activity": "Welcome and settle in",
+                "owner": ""
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "active": "qa-collision"
+  }
+}

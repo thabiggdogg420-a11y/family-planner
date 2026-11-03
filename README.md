@@ -1,6 +1,6 @@
 # Plan4Free
 
-[Open Plan4Free](https://family-frames-planning-preview.thabiggdogg420.chatgpt.site) · [Free4AllHub — all projects](https://free4allhub.thabiggdogg420.chatgpt.site) · Repository name remains `family-planner` for existing links.
+[Open Plan4Free](https://plan.free4allhub.com) · [Free4AllHub — all projects](https://free4allhub.com) · Repository name remains `family-planner` for existing links.
 
 Practical browser-based tools for organizing celebrations and planning a farewell: break decisions into manageable steps, prepare handovers, and keep people informed without turning private family details into public content.
 
@@ -24,6 +24,7 @@ The export checks below were verified with Node.js 24.22.1 (no dependency instal
 node measurement/test.mjs
 node measurement/hooks-test.mjs
 node measurement/celebrations-hooks-test.mjs
+node --test test/*.test.mjs
 ```
 
 These focused tests cover aggregate event handling and relevant UI hooks, not the whole planning experience. For changes to the memorial app shell, regenerate it with `node scripts/build-memorial-shell.mjs` and review the generated diff.
@@ -52,3 +53,9 @@ These are planning aids, not a substitute for qualified legal, medical or funera
 ## Offline guest handout
 
 The celebrations planner can prepare an HTML or plain-text guest handout from explicitly reviewed guest fields. It does not send invitations, update previously downloaded files, or include the whole private plan. Re-review after changing the plan. Verify this feature with `node --test test/guest-file.test.mjs`.
+
+## Reviewed occasion workflows (public v53 source)
+
+The source includes change-impact review, a day-of operating desk, selective reusable logistics and selective backup import. Backup import starts with every choice off; matching IDs require explicit replacement review rather than automatic identity matching or merging. Unselected occasions and the saved original are preserved. Imported plans remain session-only with Remember off until separately chosen. These are local planning/transfer tools, not automatic sync, collaboration, supplier bookings or outbound delivery.
+
+The checked-in backup fixtures are synthetic. Run the complete `node --test test/*.test.mjs` suite for preservation, stale/repeat/cancel and malformed-input regressions. These tests are not physical-mobile or human-organiser acceptance.
