@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateEvidence,validateQuote,quoteFromLegacy,quoteSummary,validateRequirement} from '../public/planning-model.js';
+const evidence=()=>({id:'fictional',kind:'provider-document',reference:'fictional test only',jurisdiction:'AU',observedAt:null,publishedAt:null,validUntil:null,reviewStatus:'unverified'});
+const invalid=['2026-02-30','2026-02-29','2026-04-31','2026-11-31','2026-02-30T10:00:00Z','2026-02-30T10:00:00.123Z','2026-11-04T24:00:00Z','2026-11-04T24:00:00.000Z'];
+const valid=[null,'2024-02-29','2026-11-04','2026-11-04T00:00:00Z','2026-11-04T23:59:59Z','2026-11-04T12:34:56.123Z','0001-01-01','9999-12-31'];
+test('evidence rejects normalized dates in every date field without mutation',()=>{for(const date of invalid)for(const field of ['observedAt','publishedAt','validUntil']){const v={...evidence(),[field]:date};const before=JSON.stringify(v);assert.throws(()=>validateEvidence(v),/Invalid date/);assert.equal(JSON.stringify(v),before);}});
+test('valid leap dates and supported timestamp precision remain accepted',()=>{for(const date of valid)for(const field of ['observedAt','publishedAt','validUntil']){const v={...evidence(),[field]:date};assert.deepEqual(validateEvidence(v),v);}});
+const quote=()=>quoteFromLegacy({supplier:'Fictional',item:'Fixture',amount:'20',scope:'test',source:'fictional',date:'',terms:''});
+test('quote date and service dates reject impossible calendar values',()=>{for(const date of invalid){for(const field of ['issuedAt','retrievedAt','validUntil'])assert.throws(()=>validateQuote({...quote(),[field]:date}),/Invalid date/);assert.throws(()=>validateQuote({...quote(),serviceDates:[date]}),/Invalid date/);}});
+test('as-of and requirement review dates do not normalize silently',()=>{for(const date of invalid){assert.throws(()=>quoteSummary([],date),/Invalid date/);assert.throws(()=>validateRequirement({classification:'optional',description:'fictional',jurisdiction:'',sourceRefs:[],applicability:'',reviewedAt:date},'2026-11-04'),/Invalid date/);}});

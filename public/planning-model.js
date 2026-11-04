@@ -25,7 +25,16 @@ function id(value) { if (typeof value !== 'string' || !/^[a-zA-Z0-9_-]{1,80}$/.t
 function integer(value) { if (!Number.isSafeInteger(value) || value < 0) throw Error('Invalid non-negative integer.'); return value; }
 function map(value, validate, limit = 100) { if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).length > limit) throw Error('Invalid bounded map.'); return Object.fromEntries(Object.entries(value).map(([k,v]) => [id(k), validate(v)])); }
 function array(value, validate, max = 100) { if (!Array.isArray(value) || value.length > max) throw Error('Invalid bounded list.'); return value.map(validate); }
-function iso(value) { if (value !== null && (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z)?$/.test(value) || !Number.isFinite(Date.parse(value)))) throw Error('Invalid date.'); return value; }
+function iso(value) {
+  if (value === null) return value;
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z)?$/.test(value) || !Number.isFinite(Date.parse(value))) throw Error('Invalid date.');
+  // Date.parse normalizes impossible dates and 24:00; reject those rather than
+  // silently moving evidence/quote deadlines to a different calendar day.
+  const canonical = new Date(value).toISOString();
+  const expected = value.length === 10 ? `${value}T00:00:00.000Z` : value.length === 20 ? value.replace('Z', '.000Z') : value;
+  if (canonical !== expected) throw Error('Invalid date.');
+  return value;
+}
 export function createPlanning() { return { schemaVersion: 1, revision: 0, lifecycle: 'not-sure', jurisdiction: '', categoryStates: {}, requirements: {}, customNeeds: [], proposals: [], audit: [] }; }
 function payload(type, value) {
   if (type === 'tasks.add') { record(value, ['task','owner','status'], 'Task'); return {task:string(value.task),owner:string(value.owner),status:choice(value.status,['Not started','In progress','Done'])}; }
